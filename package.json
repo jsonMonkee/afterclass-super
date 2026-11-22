@@ -1,10 +1,12 @@
 {
   "name": "afterclass-workspace",
   "private": true,
-  "workspaces": ["frontend"],
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
     "dev": "npm run dev --workspace frontend",
-    "build": "npm run build --workspace frontend && node -e \"const fs=require('fs'); if(fs.existsSync('frontend/.next')) fs.cpSync('frontend/.next', '.next', {recursive: true}); if(fs.existsSync('frontend/public') && !fs.existsSync('public')) fs.cpSync('frontend/public', 'public', {recursive: true});\"",
+    "build": "cd frontend && npm install && npm run build",
     "start": "npm run start --workspace frontend",
     "test": "node scripts/run-backend.mjs test",
     "backend:dev": "node scripts/run-backend.mjs dev",
