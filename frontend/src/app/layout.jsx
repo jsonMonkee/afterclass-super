@@ -4,7 +4,6 @@ import { AppProvider } from '../context/AppContext';
 import TopHeader from '../components/TopHeader';
 import DiaChatbot from '../components/DiaChatbot';
 import MobileBottomBarWrapper from '../components/MobileBottomBarWrapper';
-import SmoothScrollProvider from '../components/SmoothScrollProvider';
 
 export const metadata = {
   title: 'Afterclass for Amity — Beyond the Classroom',
@@ -30,19 +29,17 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="bg-[#E11D48] text-[#000000] font-sans antialiased selection:bg-[#FFFDF5] selection:text-[#E11D48] min-h-screen flex flex-col">
-        <SmoothScrollProvider>
-          <AppProvider>
-            {/* Globally persistent Navbar & Meet Dia Banner */}
-            <TopHeader />
-            <main className="flex-1">
-              {children}
-            </main>
-            {/* Floating AI Companion Chatbot in Bottom Right */}
-            <DiaChatbot />
-            {/* Mobile Bottom Navigation Bar (Pill + Audio/AI Circle) */}
-            <MobileBottomBarWrapper />
-          </AppProvider>
-        </SmoothScrollProvider>
+        <AppProvider>
+          {/* Globally persistent Navbar & Meet Dia Banner */}
+          <TopHeader />
+          <main className="flex-1">
+            {children}
+          </main>
+          {/* Floating AI Companion Chatbot in Bottom Right */}
+          <DiaChatbot />
+          {/* Mobile Bottom Navigation Bar (Pill + Audio/AI Circle) */}
+          <MobileBottomBarWrapper />
+        </AppProvider>
       </body>
     </html>
   );

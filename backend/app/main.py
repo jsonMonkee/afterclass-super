@@ -13,6 +13,11 @@ from app.modules.opportunities.router import router as opportunities_router
 from app.modules.dhanda.router import router as dhanda_router
 from app.modules.payments.router import router as payments_router
 from app.modules.uploads.router import router as uploads_router
+from app.modules.socials.router import router as socials_router
+from app.modules.notices.router import router as notices_router
+from app.modules.forms.router import router as forms_router
+from app.modules.apikeys.router import router as apikeys_router
+from app.modules.systemsettings.router import router as systemsettings_router
 
 settings = get_settings()
 
@@ -57,3 +62,8 @@ app.include_router(opportunities_router, prefix=settings.api_prefix)
 app.include_router(dhanda_router, prefix=settings.api_prefix)
 app.include_router(payments_router, prefix=settings.api_prefix)
 app.include_router(uploads_router, prefix=settings.api_prefix)
+app.include_router(socials_router, prefix=settings.api_prefix)
+app.include_router(notices_router, prefix=settings.api_prefix)
+app.include_router(forms_router, prefix=settings.api_prefix)
+app.include_router(apikeys_router, prefix=settings.api_prefix)
+app.include_router(systemsettings_router, prefix=settings.api_prefix)

@@ -1,12 +1,20 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default function SmoothScrollProvider({ children }) {
+  const pathname = usePathname();
+
   useEffect(() => {
+    // Disable smooth scroll interception on admin pages to prevent event blocking
+    if (pathname && pathname.startsWith('/admin')) {
+      return;
+    }
+
     // Register ScrollTrigger with GSAP
     if (typeof window !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
@@ -37,8 +45,9 @@ export default function SmoothScrollProvider({ children }) {
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
-  }, []);
+  }, [pathname]);
 
   return <>{children}</>;
 }
+
 

@@ -1,11 +1,24 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bell, ShieldCheck, Calendar, Stamp } from 'lucide-react';
-import { notices } from '../../data/amityData';
 import Footer from '../../components/Footer';
 
 export default function NoticesPage() {
+  const [noticesList, setNoticesList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/v1/notices')
+      .then(r => r.json())
+      .then(data => {
+        if (data.success && data.data) {
+          setNoticesList(data.data);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
   return (
     <div className="bg-[#E11D48] min-h-screen text-[#000000] flex flex-col font-sans select-none selection:bg-[#FFFDF5] selection:text-[#E11D48]">
       
@@ -37,11 +50,20 @@ export default function NoticesPage() {
               <span>OFFICIAL POSTAL DISPATCHES · 2026</span>
             </span>
             <span className="font-arc-mono text-xs text-[#71717A]">
-              {notices.length} Active Circulars
+              {noticesList.length} Active Circulars
             </span>
           </div>
 
-          {notices.map((notice, idx) => (
+          {loading ? (
+            <div className="text-center py-12 text-[#71717A] font-arc-mono text-sm">
+              Connecting to campus broadcast wire...
+            </div>
+          ) : noticesList.length === 0 ? (
+            <div className="text-center py-12 text-[#71717A] font-arc-mono text-sm">
+              No circulars broadcasted yet. Create a notice in the SuperAdmin portal to push it here live!
+            </div>
+          ) : (
+            noticesList.map((notice, idx) => (
             <div 
               key={notice.id}
               className="stamp-card bg-white p-6 sm:p-8 hover:border-[#E11D48] shadow-sm hover:shadow-xl transition-all duration-300 group font-arc-display"
@@ -85,11 +107,12 @@ export default function NoticesPage() {
                   <span className="w-5 h-5 rounded-full bg-[#FFE4E6] flex items-center justify-center text-[#E11D48]">
                     <ShieldCheck size={13} />
                   </span>
-                  <span>POSTED BY: Deepak Kalal</span>
+                  <span>POSTED BY: SuperAdmin</span>
                 </div>
               </div>
             </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
 

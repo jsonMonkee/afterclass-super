@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { 
   X, 
@@ -32,11 +33,16 @@ const INITIAL_MESSAGES = [
 ];
 
 export default function DiaChatbot() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
   const [inputVal, setInputVal] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+
+  if (pathname && pathname.startsWith('/admin')) {
+    return null;
+  }
   const inputRef = useRef(null);
 
   const scrollToBottom = () => {

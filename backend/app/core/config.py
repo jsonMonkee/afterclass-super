@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     smtp_password: str | None = None
     smtp_from_email: str | None = None
     smtp_from_name: str = "Afterclass Amity"
+    meta_app_id: str | None = "29385151124414706"
+    meta_app_secret: str | None = "c52fc2d4fd65bae66f09e5440e45e2d7"
 
     model_config = SettingsConfigDict(
         env_file=Path(__file__).resolve().parents[2] / ".env",
